@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import {
  Container,  
   Navbar, 
@@ -8,9 +8,32 @@ import {
   NavDropdown
 
 } from 'react-bootstrap'
-
+import axios from 'axios';
 
 export default function Header() {
+  const [data,setdata]=useState({})
+  const getprojectdata = async () => {
+    console.log(localStorage.getItem('Authorization'),"==================================================")
+   await  axios.post("http://localhost:8100/auth/validate", {}, 
+    {headers: {"Authorization" : `Bearer ${localStorage.getItem('Authorization')}`}}).then(
+      (response) => {
+        //success
+        console.log(response);
+         setdata(response.data)
+        console.log(response.data,"=============================")
+        console.log(data,"++++++++++++++++++++++++++++++")
+
+      }, (error) => {
+        //error
+        console.log(error);
+        console.log("failed +++++++++++++++++++")
+      
+      }
+    );
+  };
+  useEffect(() => {
+    getprojectdata();
+  }, []);
   return (
     
     <div className="sticky-top">
@@ -29,11 +52,13 @@ export default function Header() {
       <Nav>
       <Navbar.Text>
       <Badge pill bg="warning" text="dark">
-    Megha
+   {data.name}
   </Badge>{' '}
       </Navbar.Text>
      
-<Button style={{marginLeft:20}}>Logout</Button>
+<Button onClick={()=>{
+  window.location="/login"
+}} style={{marginLeft:20}}>Logout</Button>
       </Nav>
     </Navbar.Collapse>
   </Container>

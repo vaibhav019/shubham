@@ -31,7 +31,7 @@ const styles = {
   }
 };
 const theme = createTheme();
-export var role = '';
+
 export default function Login() {
   const postdata = (data) => {
     axios.post("http://localhost:8100/auth/authenticate", data).then(  
@@ -71,7 +71,7 @@ export default function Login() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                backgroundColor: 'aqua',
+                backgroundColor: 'white',
                 border: 1,
                 borderRadius: '5%',
               }}
@@ -112,10 +112,7 @@ export default function Login() {
                     setlogin({ ...login, password: e.target.value })
                   }}
                 />
-                <span style={{
-                  fontWeight: 'bold',
-                  color: 'black',
-                }}>* Special Characters are not allowed...</span>
+                
 
                 <Button
                   type="submit"

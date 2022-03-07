@@ -4,9 +4,7 @@ import axios from 'axios'
 export default function CheckList() {
   const [data, setdata] = useState([]);
   var heading = ['Question', 'Choices', 'Response'];
-  const [yes,setyes]=useState([]);
-  const [no,setno]=useState([]);
-  const [choice,setchoice]=useState([]);
+  const [projectdata ,setprojectdata]=useState({})
 const [data1,setdata1]=useState({"managerName": "Deep Roy",
 "projectName": "Project-1",
 "auditDetail": {
@@ -45,7 +43,28 @@ const [data1,setdata1]=useState({"managerName": "Deep Roy",
     }
       ]
   }})
+  const getprojectdata = async () => {
+    console.log(localStorage.getItem('Authorization'),"==================================================")
+   await  axios.post("http://localhost:8100/auth/validate", {}, 
+    {headers: {"Authorization" : `Bearer ${localStorage.getItem('Authorization')}`}}).then(
+      (response) => {
+        //success
+        console.log(response);
+         setprojectdata(response.data)
+        console.log(response.data,"=============================")
+        console.log(projectdata,"++++++++++++++++++++++++++++++")
 
+      }, (error) => {
+        //error
+        console.log(error);
+        console.log("failed +++++++++++++++++++")
+      
+      }
+    );
+  };
+  useEffect(() => {
+    getprojectdata();
+  }, []);
   const [search, setsearch] = useState("");
   const postdata = (data) => {
     console.log(localStorage.getItem('Authorization'),"==================================================")
@@ -72,9 +91,11 @@ const [data1,setdata1]=useState({"managerName": "Deep Roy",
       (response) => {
         //success
         console.log(response);
-       
+        console.log(response.data)
+       localStorage.setItem('projectResponse', JSON.stringify(response.data))
+       console.log(JSON.parse(localStorage.getItem('projectResponse')),"============================++======")
         alert("data sent to db")
-
+        window.location="/severity"
 
       }, (error) => {
         //error
@@ -149,36 +170,20 @@ const [data1,setdata1]=useState({"managerName": "Deep Roy",
                   data.length>0?data.map(item => <tr key={item.questionId}>
                     <td>{item.question}</td>
                     <td><Button onClick={(e)=>{
-                      if(choice.length>0){
-                        choice.pop()
-                      }
-                      choice.push('yes')
+                     
                       
                      
                     }} variant="outline-success">Yes</Button>    <Button onClick={(e)=>{
-                      no.push('no')
-                      if(yes.length>0){
-                        yes.pop('yes')
-                      }
+                     
                      
                     }} variant="outline-danger">No</Button></td>
-                    <td>{ choice[choice.length-1]}</td>
+                    <td></td>
 
 
 
 
                   </tr>)
-                  :<>
-            
-                  <Spinner animation="grow" variant="primary" />
-                  <Spinner animation="grow" variant="secondary" />
-                  <Spinner animation="grow" variant="success" />
-                  <Spinner animation="grow" variant="danger" />
-                  <Spinner animation="grow" variant="warning" />
-                  <Spinner animation="grow" variant="info" />
-                  <Spinner animation="grow" variant="light" />
-                  <Spinner animation="grow" variant="dark" />
-                </>}
+                  :''}
 
               </tbody>
             </table>

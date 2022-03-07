@@ -7,15 +7,73 @@ export default function CheckList() {
   const [yes,setyes]=useState([]);
   const [no,setno]=useState([]);
   const [choice,setchoice]=useState([]);
-
+const [data1,setdata1]=useState({"managerName": "Deep Roy",
+"projectName": "Project-1",
+"auditDetail": {
+  "auditType": "Internal",
+  "auditDate": "2021-06-17T08:28:57.369Z",
+  "auditQuestions": [
+    {
+      "auditType": "Internal",
+      "question": "Have all Change requests followed SDLC before PROD move?",
+      "questionId": 1,
+      "response": "YES"
+    },
+    {
+      "auditType": "Internal",
+      "question": "Have all Change requests been approved by the application owner?",
+      "questionId": 2,
+      "response": "NO"
+    },
+    {
+      "auditType": "Internal",
+      "question": "Are all artifacts like CR document, Unit test cases available?",
+      "questionId": 3,
+      "response": "YES"
+    },
+    {
+      "auditType": "Internal",
+      "question": "Is the SIT and UAT sign-off available?",
+      "questionId": 4,
+      "response": "NO"
+    },
+    {
+      "auditType": "Internal",
+      "question": "Is data deletion from the system done with application owner approval?",
+      "questionId": 5,
+      "response": "YES"
+    }
+      ]
+  }})
 
   const [search, setsearch] = useState("");
   const postdata = (data) => {
-    axios.post("http://localhost:8200/checklist/AuditCheckListQuestions", data).then(
+    console.log(localStorage.getItem('Authorization'),"==================================================")
+    axios.post("http://localhost:8200/checklist/AuditCheckListQuestions", data, 
+    {headers: {"Authorization" : `Bearer ${localStorage.getItem('Authorization')}`}}).then(
       (response) => {
         //success
         console.log(response);
         setdata(response.data)
+
+      }, (error) => {
+        //error
+        console.log(error);
+        console.log("failed +++++++++++++++++++")
+      
+      }
+    );
+  };
+
+  const postdata1 = (data) => {
+    //console.log(localStorage.getItem('Authorization'),"==================================================")
+    axios.post("http://localhost:8300/severity/ProjectExecutionStatus", data, 
+    {headers: {"Authorization" : `Bearer ${localStorage.getItem('Authorization')}`}}).then(
+      (response) => {
+        //success
+        console.log(response);
+       
+        alert("data sent to db")
 
 
       }, (error) => {
@@ -27,8 +85,13 @@ export default function CheckList() {
     );
   };
 
+  const handleSubmit1 = (e) => {
 
-
+    console.log(search)
+    postdata1(data1)
+    e.preventDefault();
+  
+  };
 
   const handleSubmit = (e) => {
 
@@ -57,7 +120,7 @@ export default function CheckList() {
                 }}>
                   <option>Select Audit Type</option>
                   <option value="Internal">Internal</option>
-                  <option value="OSX">Osx</option>
+                  <option value="SOX">SOX</option>
 
                 </Form.Select>
               </Form.Group>
@@ -71,7 +134,7 @@ export default function CheckList() {
       </Container>
 
       <Container>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit1}>
 
         {
           (data.length > 0) ?
@@ -125,7 +188,8 @@ export default function CheckList() {
        }
        {data.length>0 &&  <Button type="submit" variant="outline-success" style={{textAlign:'center',marginLeft:'28%',marginTop:'100'}} onClick={
          ()=>{
-           window.location="/severity"
+          // alert("data sent")
+          // window.location="/severity"
          }
        }>submit</Button>}
         

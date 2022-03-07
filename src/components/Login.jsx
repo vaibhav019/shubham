@@ -39,8 +39,9 @@ export default function Login() {
         //success
         console.log(response, "============");
         console.log(response.data)
-        localStorage.setItem("authtoken", response.data)
-        console.log("authtoken", localStorage.getItem("authtoken"))
+        localStorage.setItem("Authorization", response.data)
+        console.log("Authorization", localStorage.getItem("Authorization"))
+        alert("Login done")
         window.location = "/checklist";
         console.log("successs");
       }, (error) => {

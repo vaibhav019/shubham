@@ -19,7 +19,7 @@ import validator from 'validator'
 
 const styles = {
   paperContainer: {
-      backgroundImage: `url(${"https://media.istockphoto.com/photos/mature-doctor-and-nurse-discussing-patient-case-picture-id1307543555?b=1&k=20&m=1307543555&s=170667a&w=0&h=KKk1RkwzUkT_a6Kqf0jh7aBEVpIMG048FALjEAPyDp0="})`,
+     // backgroundImage: `url(${"https://media.istockphoto.com/photos/audit-concept-on-a-computer-display-picture-id1161029738?b=1&k=20&m=1161029738&s=170667a&w=0&h=NZLxIMG5LIZDuNcZol2XHhYMuPNKvDAgYGXWq-DjW_k="})`,
       position: 'absolute',
       backgroundSize: 'cover',
       backgroundPosition: 'center center',
@@ -30,7 +30,8 @@ const styles = {
       display: 'block',
       Width:1000,
       height:1000,
-      marginTop:0
+      marginTop:0,
+      backgroundColor: 'gray'               //'linear-gradient(to bottom right, red, yellow)'
 
   }
 };

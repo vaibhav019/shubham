@@ -75,7 +75,7 @@ export default function CheckList() {
 
         {
           (data.length > 0) ?
-            <table bordered size="sm" variant="dark" cellPadding={10} cellSpacing={10} style={{ width: 900, marginTop: '20', marginLeft: '10' }}>
+            <table striped bordered hover variant="dark" cellPadding={10} cellSpacing={10} style={{ width: 900, marginTop: '20', marginLeft: '10' }}>
               <thead>
                 <tr>
                   {heading.map(head => <th>{head}</th>)}
@@ -123,7 +123,11 @@ export default function CheckList() {
              ''
          
        }
-       {data.length>0 &&  <Button type="submit" variant="outline-success" style={{textAlign:'center',marginLeft:'28%',marginTop:'100'}}>submit</Button>}
+       {data.length>0 &&  <Button type="submit" variant="outline-success" style={{textAlign:'center',marginLeft:'28%',marginTop:'100'}} onClick={
+         ()=>{
+           window.location="/severity"
+         }
+       }>submit</Button>}
         
         </Form>
       </Container>

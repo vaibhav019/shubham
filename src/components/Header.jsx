@@ -52,11 +52,12 @@ export default function Header() {
       <Nav>
       <Navbar.Text>
       <Badge pill bg="warning" text="dark">
-   {data.name}
+   {(data.name)?data.name:''}
   </Badge>{' '}
       </Navbar.Text>
      
 <Button onClick={()=>{
+  setdata({})
   window.location="/login"
 }} style={{marginLeft:20}}>Logout</Button>
       </Nav>

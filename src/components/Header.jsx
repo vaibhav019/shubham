@@ -8,32 +8,9 @@ import {
   NavDropdown
 
 } from 'react-bootstrap'
-import axios from 'axios';
 
 export default function Header() {
-  const [data,setdata]=useState('')
-  const getprojectdata = async () => {
-    console.log(localStorage.getItem('Authorization'),"==================================================")
-   await  axios.post("http://localhost:8100/auth/validate", {}, 
-    {headers: {"Authorization" : `Bearer ${localStorage.getItem('Authorization')}`}}).then(
-      (response) => {
-        //success
-        console.log(response);
-         setdata(response.data.name)
-        console.log(response.data,"=============================")
-        console.log(data,"++++++++++++++++++++++++++++++")
-
-      }, (error) => {
-        //error
-        console.log(error);
-        console.log("failed +++++++++++++++++++")
-      
-      }
-    );
-  };
-  useEffect(() => {
-    getprojectdata();
-  }, []);
+  
   return (
     
     <div className="sticky-top">
@@ -52,12 +29,12 @@ export default function Header() {
       <Nav>
       <Navbar.Text>
       <Badge pill bg="warning" text="dark">
-   {(data)?data:''}
+   {localStorage.getItem("user")}
   </Badge>{' '}
       </Navbar.Text>
      
 <Button onClick={()=>{
-  setdata({})
+  localStorage.removeItem("user")
   window.location="/login"
 }} style={{marginLeft:20}}>Logout</Button>
       </Nav>

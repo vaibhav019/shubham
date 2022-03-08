@@ -33,7 +33,7 @@ const styles = {
 const theme = createTheme();
 
 export default function Login() {
-  const postdata = (data) => {
+  const postdata =  (data) => {
     axios.post("http://localhost:8100/auth/authenticate", data).then(  
       (response) => {
         //success
@@ -51,6 +51,26 @@ export default function Login() {
         console.log("failed +++++++++++++++++++")
       }
     );
+
+    console.log(localStorage.getItem('Authorization'),"==================================================")
+      axios.post("http://localhost:8100/auth/validate", {}, 
+     {headers: {"Authorization" : `Bearer ${localStorage.getItem('Authorization')}`}}).then(
+       (response) => {
+         //success
+         console.log(response);
+          //setdata(response.data.name)
+         console.log(response.data,"=============================")
+         localStorage.setItem("user",response.data.name)
+         console.log(localStorage.getItem("user"))
+         console.log(data,"++++++++++++++++++++++++++++++")
+ 
+       }, (error) => {
+         //error
+         console.log(error);
+         console.log("failed +++++++++++++++++++")
+       
+       }
+     );
   };
   const [login, setlogin] = useState({});
   const handleSubmit = (e) => {

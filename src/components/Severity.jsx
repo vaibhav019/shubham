@@ -33,7 +33,7 @@ export default function Severity() {
         </thead>
         <tbody>
           <tr>
-<td> <Badge pill bg="success" text="dark">
+<td> <Badge pill bg={(projectdata.projectExecutionStatus=="GREEN")?"success":"danger"} text="dark">
 {projectdata.projectExecutionStatus}
   </Badge>{' '}</td>
 <td>{projectdata.remedialActionDuration}</td>

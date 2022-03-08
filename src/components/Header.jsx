@@ -11,7 +11,7 @@ import {
 import axios from 'axios';
 
 export default function Header() {
-  const [data,setdata]=useState({})
+  const [data,setdata]=useState('')
   const getprojectdata = async () => {
     console.log(localStorage.getItem('Authorization'),"==================================================")
    await  axios.post("http://localhost:8100/auth/validate", {}, 
@@ -19,7 +19,7 @@ export default function Header() {
       (response) => {
         //success
         console.log(response);
-         setdata(response.data)
+         setdata(response.data.name)
         console.log(response.data,"=============================")
         console.log(data,"++++++++++++++++++++++++++++++")
 
@@ -52,7 +52,7 @@ export default function Header() {
       <Nav>
       <Navbar.Text>
       <Badge pill bg="warning" text="dark">
-   {(data.name)?data.name:''}
+   {(data)?data:''}
   </Badge>{' '}
       </Navbar.Text>
      
